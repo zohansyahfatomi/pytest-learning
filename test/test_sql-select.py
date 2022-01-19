@@ -1,4 +1,4 @@
-import app.sql-select
+import sql-select
 
 def tes_db():
     assert len(rs) == 9 
