@@ -1,80 +1,83 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from pymysql import connect, Error
 
-def select_db():
-   try:
-      global conn, cursor
-      conn = connect(
-         host="localhost",
-         user="root",
-         password="",
-         db="db_kafka"
-         )
 
-      cursor = conn.cursor()
-      
-      sql_select_query = "SELECT kata from Msg"
-      cursor.execute(sql_select_query)
-      rs = cursor.fetchall()
-      print(rs)
+class Databases(object):
 
-   except Error as error:
-      print("Failed to select record to database rollback: {}".format(error))
-      conn.rollback()
+    def __init__(self, kata):
+        self.kata = kata
 
-   finally:
-      cursor.close()
-      conn.close()
+   # SELECT data
 
-def insert_db():
-   try:
-      global conn, cursor
-      conn = connect(
-         host="localhost",
-         user="root",
-         password="",
-         db="db_kafka"
-         )
+    def select_db():
+        try:
+            global conn, cursor
+            conn = connect(host='localhost', user='root', password='',
+                           db='db_kafka')
 
-      cursor = conn.cursor()
-      
-      kata = "ini kata"
-      sql_insert_query = "INSERT INTO Msg (kata) VALUES (%s)"
-      values = (kata)
-      cursor.execute(sql_insert_query, values)
-      conn.commit()      
+            cursor = conn.cursor()
 
-   except Error as error:
-      print("Failed to insert record to database rollback: {}".format(error))
-      conn.rollback()
+            sql_select_query = 'SELECT kata from Msg'
+            cursor.execute(sql_select_query)
+            rs = cursor.fetchall()
+            return rs
 
-   finally:
-      cursor.close()
-      conn.close()
-      
-def update_db():
-   try:
-      global conn, cursor
-      conn = connect(
-         host="localhost",
-         user="root",
-         password="",
-         db="db_kafka"
-         )
+        except Error, error:
 
-      cursor = conn.cursor()
-      
-      kata = "ini kata"
-      kata_ubah = "ini kata ubah"
-      sql_insert_query = "UPDATE  Msg SET kata = %s WHERE kata = %s"
-      values = (kata_ubah, kata)
-      cursor.execute(sql_insert_query, values)
-      conn.commit()      
+            print 'Failed to select record to database rollback: {}'.format(error)
+            conn.rollback()
+        finally:
 
-   except Error as error:
-      print("Failed to update record to database rollback: {}".format(error))
-      conn.rollback()
+            cursor.close()
+            conn.close()
 
-   finally:
-      cursor.close()
-      conn.close()
+   # INSERT data
 
+    def insert_db():
+        try:
+            global conn, cursor
+            conn = connect(host='localhost', user='root', password='',
+                           db='db_kafka')
+
+            cursor = conn.cursor()
+
+            kata = 'ini kata'
+            sql_insert_query = 'INSERT INTO Msg (kata) VALUES (%s)'
+            values = kata
+            cursor.execute(sql_insert_query, values)
+            conn.commit()
+        except Error, error:
+
+            print 'Failed to insert record to database rollback: {}'.format(error)
+            conn.rollback()
+        finally:
+
+            cursor.close()
+            conn.close()
+
+   # UPDATE data
+
+    def update_db():
+        try:
+            global conn, cursor
+            conn = connect(host='localhost', user='root', password='',
+                           db='db_kafka')
+
+            cursor = conn.cursor()
+
+            kata = 'ini kata'
+            kata_ubah = 'ini kata ubah'
+            sql_insert_query = \
+                'UPDATE  Msg SET kata = %s WHERE kata = %s'
+            values = (kata_ubah, kata)
+            cursor.execute(sql_insert_query, values)
+            conn.commit()
+        except Error, error:
+
+            print 'Failed to update record to database rollback: {}'.format(error)
+            conn.rollback()
+        finally:
+
+            cursor.close()
+            conn.close()

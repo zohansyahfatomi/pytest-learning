@@ -1,7 +1,7 @@
-#import sys
-#sys.path.insert(1, '/home/lembu/bitwyre/pytesting/app')
-#from ..app import sql
+from app.sql import Databases
 
-def test_db():
+db = Databases()
+
+def test_select_db():
     assert True
-    len(rs) == 9
+    #assert db.select_db() == 9
