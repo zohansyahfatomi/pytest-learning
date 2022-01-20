@@ -10,22 +10,25 @@ class Databases(object):
 
    # SELECT data
 
-    def select_db():
+    def select_db(self):
         try:
+
             global conn, cursor
-            conn = connect(host='localhost', user='root', password='',
-                           db='db_kafka')
+            conn = connect(host="localhost", user="root", password="",
+                           db="db_kafka")
 
             cursor = conn.cursor()
 
-            sql_select_query = 'SELECT kata from Msg'
+            sql_select_query = "SELECT kata from Msg"
             cursor.execute(sql_select_query)
             rs = cursor.fetchall()
-            return rs
+            self.kata = len(rs)
 
-        except Error, error:
+            return self.kata
 
-            print 'Failed to select record to database rollback: {}'.format(error)
+        except Error as error:
+
+            print ("Failed to select record to database rollback: {}".format(error))
             conn.rollback()
         finally:
 
@@ -47,9 +50,8 @@ class Databases(object):
             values = kata
             cursor.execute(sql_insert_query, values)
             conn.commit()
-        except Error, error:
-
-            print 'Failed to insert record to database rollback: {}'.format(error)
+        except Error as error:
+            print ('Failed to insert record to database rollback: {}'.format(error))
             conn.rollback()
         finally:
 
@@ -73,9 +75,8 @@ class Databases(object):
             values = (kata_ubah, kata)
             cursor.execute(sql_insert_query, values)
             conn.commit()
-        except Error, error:
-
-            print 'Failed to update record to database rollback: {}'.format(error)
+        except Error as error:
+            print ('Failed to update record to database rollback: {}'.format(error))
             conn.rollback()
         finally:
 
