@@ -1,8 +1,7 @@
-import sys
-sys.path.insert(1, '/home/lembu/bitwyre/pytesting/app')
-import sql
+#import sys
+#sys.path.insert(1, '/home/lembu/bitwyre/pytesting/app')
+#from ..app import sql
 
-def tes_db():
-    assert len(rs) == 9 
-
-test_db()
+def test_db():
+    assert True
+    len(rs) == 9
