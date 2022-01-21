@@ -1,12 +1,16 @@
 from app.sql import Databases
 
-db = Databases(kata = "kata1")
+db = Databases()
 
 def test_select_db():
-    db.select_db()
-    assert db.kata == 10
-    
-'''
+    result = db.select_db(1)
+    #print(result.get('mangga'))
+    assert result.get("kata") == "mangga"
+
 def test_insert_db():
-    db.insert_db()
-'''
+    assert db.insert_db("jeruk")
+
+
+def test_update_Db():
+    assert db.update_db("rambutan","jeruk")
+
